@@ -1,0 +1,64 @@
+#include <stdio.h>
+
+// Structure to store student details
+struct Student {
+    char name[50];
+    int rollNo;
+    float marks[5];
+    float total;
+    float average;
+};
+
+// Function to input student details
+void inputDetails(struct Student *s, int numSubjects) {
+    printf("\nEnter student name: ");
+    scanf(" %[^\n]", s->name);  // Use %[^\n] to allow space in student names
+    printf("Enter roll number: ");
+    scanf("%d", &s->rollNo);
+
+    s->total = 0; // Initialize total to 0
+
+    for (int i = 0; i < numSubjects; i++) {
+        printf("Enter marks for subject %d: ", i + 1);
+        scanf("%f", &s->marks[i]);
+        s->total += s->marks[i]; // Calculate total
+    }
+    s->average = s->total / numSubjects; // Calculate average
+}
+
+// Function to display student details
+void displayDetails(struct Student s, int numSubjects) {
+    printf("\nStudent Name: %s", s.name);
+    printf("\nRoll Number: %d", s.rollNo);
+    
+    for (int i = 0; i < numSubjects; i++) {
+        printf("\nMarks for Subject %d: %.2f", i + 1, s.marks[i]);
+    }
+    
+    printf("\nTotal Marks: %.2f", s.total);
+    printf("\nAverage Marks: %.2f", s.average);
+    printf("\n--------------------------");
+}
+
+int main() {
+    int numStudents, numSubjects = 5;
+
+    printf("Enter the number of students: ");
+    scanf("%d", &numStudents);
+
+    struct Student students[numStudents];
+
+    // Input details for each student
+    for (int i = 0; i < numStudents; i++) {
+        printf("\nEntering details for student %d\n", i + 1);
+        inputDetails(&students[i], numSubjects);
+    }
+
+    // Display details for each student
+    printf("\n--- Student Mark Database ---");
+    for (int i = 0; i < numStudents; i++) {
+        displayDetails(students[i], numSubjects);
+    }
+
+    return 0;
+}
